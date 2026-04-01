@@ -4,8 +4,7 @@
 * Date   : April 1, 2026
 *==============================================================================
 
-*** !!! EDIT THIS PART !!! ***
-cd "C:\Users\gannedalegamo\Desktop\emigrants-factors"
+cd "C:\Users\Admin\Desktop\emigrants-factors"
 
 *------------------------------------------------------------------------------
 * 0. DATA SETUP
