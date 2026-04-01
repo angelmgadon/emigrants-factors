@@ -1,0 +1,32 @@
+Interpretation of Your ARDL Results
+1. Descriptive Statistics
+Your dataset spans 1991–2023 (33 observations) and examines bilateral push-pull factors of Filipino emigration to the United States. The dependent variable is Filipino emigration (emig), with an average of about 35,439 emigrants per year, ranging from a low of 6,539 to a high of 49,522. All variables are log-transformed for the ARDL analysis, which means coefficients can be interpreted as elasticities (percentage changes).
+
+2. Unit Root Tests (ADF)
+The ADF tests confirm that all variables are non-stationary in levels but become stationary after first differencing — i.e., they are all I(1). This is a crucial prerequisite for ARDL bounds testing, which requires that variables be I(0) or I(1) but not I(2).
+Specifically, in levels, none of the test statistics exceed their respective 5% critical values (and p-values are well above 0.05): ln_emig (p = 0.4645), ln_er_phl (p = 0.2791), ln_gdppc_phl (p = 0.9913), ln_gdppc_usa (p = 0.7285), ln_unemp_phl (p = 0.8866), ln_unemp_usa (p = 0.2115), ln_tax_phl (p = 0.2427). After first differencing, all become stationary at the 5% level, with p-values ranging from 0.0007 to 0.0376.
+One note: ln_tax_usa appears to be stationary in levels at the 5% level (p = 0.0376), meaning it could be classified as I(0). This is acceptable for ARDL — the method accommodates a mix of I(0) and I(1) variables — but it's worth flagging that this variable was excluded from the final ARDL model anyway.
+
+3. ARDL Model — ARDL(1,1,0,1,0)
+The selected model is an ARDL(1,1,0,1,0) for the equation with ln_emig as the dependent variable and ln_gdppc_phl, ln_gdppc_usa, ln_unemp_phl, and ln_tax_phl as regressors. Lag selection was done via AIC with a maximum of 1 lag. The model is estimated in error-correction form.
+Model Fit: R² = 0.8313 and Adjusted R² = 0.7821, meaning the model explains roughly 83% of the variation in emigration changes — a strong fit overall.
+Speed of Adjustment (ADJ): The error-correction term (L1.ln_emig) is −0.459 and highly significant (p = 0.000). This is the most important coefficient in the model. It means that approximately 46% of any disequilibrium between emigration and its long-run determinants is corrected within one year. The negative sign and statistical significance confirm that the system converges back to equilibrium after a shock — a necessary condition for a valid error-correction model.
+Long-Run Coefficients (LR): None of the long-run coefficients are individually statistically significant at conventional levels (all p-values > 0.10). This means that while the variables collectively share a cointegrating (long-run) relationship (confirmed by the bounds test below), the individual long-run effects cannot be precisely estimated with this sample size. The point estimates suggest: PH GDP per capita has a small positive long-run effect on emigration (+0.32), US GDP per capita has a negative effect (−2.43), PH unemployment has a positive effect (+0.86), and PH tax revenue has a negative effect (−1.73) — but all of these should be interpreted with caution given the wide confidence intervals.
+Short-Run Coefficients (SR): Two short-run effects are statistically significant:
+
+D.ln_gdppc_phl = +6.856 (p = 0.000): A 1% increase in Philippine GDP per capita is associated with a roughly 6.9% increase in emigration in the short run. This is a strong and highly significant effect, consistent with the "emigration hump" hypothesis — as a developing country's income rises, more people can afford to emigrate.
+D.ln_unemp_phl = −1.336 (p = 0.006): A 1% increase in Philippine unemployment is associated with a 1.3% decrease in emigration in the short run. This may seem counterintuitive, but it could reflect that higher unemployment reduces the financial capacity to emigrate (emigrating is costly), or it may capture cyclical effects during economic downturns that simultaneously suppress migration processing.
+
+
+4. Bounds Test for Cointegration
+The Pesaran, Shin, and Smith (2001) bounds test yields F = 7.700 and t = −5.339. Both statistics exceed their upper-bound I(1) critical values at the 1%, 5%, and 10% significance levels. The decision at all three levels is reject the null hypothesis of no long-run relationship.
+This is strong evidence that a long-run cointegrating relationship exists between Filipino emigration and its determinants (PH GDP per capita, US GDP per capita, PH unemployment, and PH tax revenue). This validates the use of the ARDL error-correction specification.
+
+5. Diagnostic Tests
+All three diagnostics indicate a well-specified model:
+Serial Correlation (Breusch-Godfrey): χ² = 0.470, p = 0.4930. You fail to reject the null of no serial correlation. The residuals are free from first-order autocorrelation, which is essential for valid inference.
+Heteroskedasticity (Breusch-Pagan): χ² = 1.16, p = 0.2815. You fail to reject the null of constant variance. The error terms have homoskedastic variance, meaning standard errors and t-tests are reliable.
+Normality (Skewness-Kurtosis & Jarque-Bera): The sktest gives a joint χ² = 3.25 (p = 0.1968) and the Jarque-Bera test gives χ² = 2.437 (p = 0.2956). Both fail to reject the null of normally distributed residuals. This supports the validity of hypothesis tests and confidence intervals.
+
+Overall Takeaway
+Your ARDL model is econometrically sound. The bounds test confirms cointegration, the error-correction term is correctly signed and significant, and all diagnostic tests pass cleanly. The key empirical finding is that while a long-run equilibrium relationship exists, the short-run dynamics are where the statistically significant action is — particularly the strong positive short-run effect of Philippine GDP per capita and the negative short-run effect of Philippine unemployment on emigration to the US. The insignificance of individual long-run coefficients may partly reflect the relatively small sample size (n = 32), which limits statistical power in a model with multiple regressors.
